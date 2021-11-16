@@ -1,6 +1,7 @@
 import React from "react";
 import { collection, query, orderBy, limit } from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
+import NoSsr from "@mui/material/NoSsr";
 
 import { db } from "../src/firebase/client-app";
 import GroupBuildTable from "../src/components/GroupBuildTable";
@@ -14,6 +15,16 @@ import {
 } from "../src/cloudbuildStatus";
 
 export default function Home() {
+  return (
+    <>
+      <NoSsr>
+        <HomePage />
+      </NoSsr>
+    </>
+  );
+}
+
+function HomePage() {
   const [snapshot, loading, error] = useCollection(
     query(collection(db, "builds"), orderBy("startTime", "desc"), limit(250)),
     {}

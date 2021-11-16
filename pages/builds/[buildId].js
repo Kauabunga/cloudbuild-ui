@@ -2,10 +2,19 @@ import React from "react";
 import { useRouter } from "next/router";
 import { doc } from "firebase/firestore";
 import { useDocument } from "react-firebase-hooks/firestore";
+import NoSsr from "@mui/material/NoSsr";
 
 import { db } from "../../src/firebase/client-app";
 
-export default function Home() {
+export default function Build() {
+  return (
+    <NoSsr>
+      <BuildPage />
+    </NoSsr>
+  );
+}
+
+function BuildPage() {
   const { query } = useRouter();
   const { buildId } = query;
 
