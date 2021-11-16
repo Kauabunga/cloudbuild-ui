@@ -1,4 +1,5 @@
 import * as React from "react";
+import { grey } from "@mui/material/colors";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -11,7 +12,7 @@ import AllBuildTableItem from "./AllBuildTableItem";
 
 export default function BuildTable({ builds }) {
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ bgcolor: grey[100] }}>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>

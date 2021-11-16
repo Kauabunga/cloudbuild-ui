@@ -2,6 +2,7 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import { green, red, yellow } from "@mui/material/colors";
 import Avatar from "@mui/material/Avatar";
+import CircularProgress from "@mui/material/CircularProgress";
 import CheckIcon from "@mui/icons-material/Check";
 import HourglassFullIcon from "@mui/icons-material/HourglassFull";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
@@ -40,11 +41,7 @@ function BuildTableItemAvatar(props) {
       );
 
     case STATUSES_WORKING:
-      return (
-        <Avatar sx={{ ...sx }}>
-          <DirectionsRunIcon sx={sxIcon} />
-        </Avatar>
-      );
+      return <CircularProgress size={24} sx={{ marginTop: 0.5 }} />;
 
     case STATUSES_FAILURE:
       return (

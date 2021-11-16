@@ -22,7 +22,7 @@ function GroupBuildTableItem(props) {
   const { groupId, group } = props;
   const [open, setOpen] = React.useState(false);
 
-  const cellCx = { padding: 1 };
+  const cellCx = { padding: 0, paddingLeft: 2, paddingRight: 2 };
 
   return (
     <React.Fragment>

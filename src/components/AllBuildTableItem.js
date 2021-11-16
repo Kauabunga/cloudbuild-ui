@@ -18,7 +18,7 @@ function BuildTableItem(props) {
   const [open, setOpen] = React.useState(false);
 
   const [env, type, ...label] = build.tags;
-  const cellCx = { padding: 1 };
+  const cellCx = { padding: 0, paddingLeft: 2, paddingRight: 2 };
 
   return (
     <React.Fragment>
@@ -43,7 +43,12 @@ function BuildTableItem(props) {
           {label
             .filter((item) => !String(item).startsWith("trigger-"))
             .map((item) => (
-              <Chip key={item} label={item} style={{ marginRight: 8 }} />
+              <Chip
+                key={item}
+                label={item}
+                size="small"
+                style={{ marginRight: 8 }}
+              />
             ))}
         </TableCell>
 

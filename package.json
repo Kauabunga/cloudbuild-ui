@@ -3,6 +3,7 @@
   "private": false,
   "scripts": {
     "dev": "next dev",
+    "deploy:firestore": "firebase deploy --only firestore",
     "build": "next build && next export",
     "start": "next start",
     "lint": "next lint"

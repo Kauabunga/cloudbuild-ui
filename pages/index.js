@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
+import Router from "next/router";
 import { collection, query, orderBy, limit } from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
 import NoSsr from "@mui/material/NoSsr";
 
-import { db } from "../src/firebase/client-app";
+import { db, auth } from "../src/firebase/client-app";
 import GroupBuildTable from "../src/components/GroupBuildTable";
 import {
   STATUSES_SUCCESS,
@@ -25,16 +27,24 @@ export default function Home() {
 }
 
 function HomePage() {
+  const [user, loadingUser, errorUser] = useAuthState(auth);
+
+  useEffect(() => {
+    if (!user && !loadingUser) {
+      Router.push("/auth");
+    }
+  }, [user, loadingUser]);
+
   const [snapshot, loading, error] = useCollection(
     query(collection(db, "builds"), orderBy("startTime", "desc"), limit(250)),
     {}
   );
 
-  if (loading) {
+  if (loading || loadingUser) {
     return <div>Loading...</div>;
   }
 
-  if (error) {
+  if (error || errorUser) {
     return <div>Error: {JSON.stringify(error)}</div>;
   }
 
