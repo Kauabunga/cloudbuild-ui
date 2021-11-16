@@ -1,0 +1,6 @@
+export const STATUSES_SUCCESS = "SUCCESS";
+export const STATUSES_QUEUED = "QUEUED";
+export const STATUSES_WORKING = "WORKING";
+export const STATUSES_FAILURE = "FAILURE";
+export const STATUSES_INTERNAL_ERROR = "INTERNAL_ERROR";
+export const STATUSES_TIMEOUT = "TIMEOUT";
