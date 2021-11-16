@@ -3,12 +3,8 @@ import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -22,15 +18,16 @@ function BuildTableItem(props) {
   const [open, setOpen] = React.useState(false);
 
   const [env, type, ...label] = build.tags;
+  const cellCx = { padding: 1 };
 
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-        <TableCell>
+        <TableCell sx={cellCx}>
           <BuildTableItemAvatar status={build.status} />
         </TableCell>
 
-        <TableCell>
+        <TableCell sx={cellCx}>
           <IconButton
             aria-label="expand row"
             size="small"
@@ -40,25 +37,24 @@ function BuildTableItem(props) {
           </IconButton>
         </TableCell>
 
-        <TableCell component="th" scope="row">
-          {env}
+        <TableCell sx={cellCx}>{env}</TableCell>
+        <TableCell sx={cellCx}>{type}</TableCell>
+        <TableCell sx={cellCx}>
+          {label
+            .filter((item) => !String(item).startsWith("trigger-"))
+            .map((item) => (
+              <Chip key={item} label={item} style={{ marginRight: 8 }} />
+            ))}
         </TableCell>
-        <TableCell component="th" scope="row">
-          {type}
-        </TableCell>
-        <TableCell component="th" scope="row">
-          {label.map((item) => (
-            <Chip key={item} label={item} style={{ marginRight: 8 }} />
-          ))}
-        </TableCell>
-        <TableCell component="th" scope="row">
+
+        <TableCell sx={cellCx}>
           <BuildTableItemDuration
             startTime={build.startTime}
             finishTime={build.finishTime}
           />
         </TableCell>
 
-        <TableCell align="center">
+        <TableCell sx={cellCx} align="center">
           <IconButton component="a" href={`${build.logUrl}&authuser=1`}>
             <OpenInNewIcon />
           </IconButton>
@@ -66,40 +62,18 @@ function BuildTableItem(props) {
       </TableRow>
 
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell style={{ padding: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
-                History
-              </Typography>
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Customer</TableCell>
-                    <TableCell align="right">Amount</TableCell>
-                    <TableCell align="right">Total price ($)</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <pre style={{ maxWidth: "100vw", overflowX: "scroll" }}>
-                    {JSON.stringify(build, null, 2)}
-                  </pre>
-
-                  {(build.history || []).map((historyRow) => (
-                    <TableRow key={historyRow.date}>
-                      <TableCell component="th" scope="row">
-                        {historyRow.date}
-                      </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align="right">{historyRow.amount}</TableCell>
-                      <TableCell align="right">
-                        {Math.round(historyRow.amount * row.price * 100) / 100}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+            <Box sx={{ margin: 0 }}>
+              <pre
+                style={{
+                  maxWidth: "100vw",
+                  wordBreak: "space",
+                  overflowX: "scroll",
+                }}
+              >
+                {JSON.stringify(build, null, 2)}
+              </pre>
             </Box>
           </Collapse>
         </TableCell>

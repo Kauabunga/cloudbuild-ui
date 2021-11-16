@@ -21,51 +21,54 @@ import {
 function BuildTableItemAvatar(props) {
   const { status } = props;
 
+  const sx = { width: 24, height: 24 };
+  const sxIcon = { fontSize: 24 };
+
   switch (String(status).toUpperCase()) {
     case STATUSES_SUCCESS:
       return (
-        <Avatar sx={{ bgcolor: green[500] }}>
-          <CheckIcon />
+        <Avatar sx={{ ...sx, bgcolor: green[500] }}>
+          <CheckIcon sx={sxIcon} />
         </Avatar>
       );
 
     case STATUSES_QUEUED:
       return (
-        <Avatar>
-          <HourglassFullIcon />
+        <Avatar sx={{ ...sx }}>
+          <HourglassFullIcon sx={sxIcon} />
         </Avatar>
       );
 
     case STATUSES_WORKING:
       return (
-        <Avatar>
-          <DirectionsRunIcon />
+        <Avatar sx={{ ...sx }}>
+          <DirectionsRunIcon sx={sxIcon} />
         </Avatar>
       );
 
     case STATUSES_FAILURE:
       return (
-        <Avatar sx={{ bgcolor: red[500] }}>
-          <ErrorIcon />
+        <Avatar sx={{ ...sx, bgcolor: red[500] }}>
+          <ErrorIcon sx={sxIcon} />
         </Avatar>
       );
 
     case STATUSES_INTERNAL_ERROR:
       return (
-        <Avatar sx={{ bgcolor: yellow[500] }}>
-          <WarningIcon />
+        <Avatar sx={{ ...sx, bgcolor: yellow[500] }}>
+          <WarningIcon sx={sxIcon} />
         </Avatar>
       );
 
     case STATUSES_TIMEOUT:
       return (
-        <Avatar sx={{ bgcolor: red[500] }}>
-          <AccessTimeIcon />
+        <Avatar sx={{ ...sx, bgcolor: red[500] }}>
+          <AccessTimeIcon sx={sxIcon} />
         </Avatar>
       );
 
     default:
-      return <Avatar />;
+      return <Avatar sx={{ ...sx }} />;
   }
 }
 

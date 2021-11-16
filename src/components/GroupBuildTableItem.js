@@ -21,19 +21,17 @@ import BuildTableItemDuration from "./BuildTableItemDuration";
 function GroupBuildTableItem(props) {
   const { groupId, group } = props;
   const [open, setOpen] = React.useState(false);
-  // const [env, type, ...label] = build.tags;
 
-  const env = "";
-  const type = "";
-  const label = [];
+  const cellCx = { padding: 1 };
+
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-        <TableCell>
+        <TableCell sx={cellCx}>
           <BuildTableItemAvatar status={group.status} />
         </TableCell>
 
-        <TableCell>
+        <TableCell sx={cellCx}>
           <IconButton
             aria-label="expand row"
             size="small"
@@ -43,18 +41,11 @@ function GroupBuildTableItem(props) {
           </IconButton>
         </TableCell>
 
-        <TableCell component="th" scope="row">
+        <TableCell sx={cellCx} component="th" scope="row">
           {groupId}
         </TableCell>
-        <TableCell component="th" scope="row">
-          {type}
-        </TableCell>
-        <TableCell component="th" scope="row">
-          {label.map((item) => (
-            <Chip key={item} label={item} style={{ marginRight: 8 }} />
-          ))}
-        </TableCell>
-        <TableCell component="th" scope="row">
+
+        <TableCell sx={cellCx} component="th" scope="row">
           <BuildTableItemDuration
             startTime={group.startTime}
             finishTime={group.finishTime}
@@ -63,12 +54,9 @@ function GroupBuildTableItem(props) {
       </TableRow>
 
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell style={{ padding: 0 }} colSpan={7}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
-                Builds
-              </Typography>
+            <Box sx={{ margin: 0, padding: 0 }}>
               <AllBuildTable
                 builds={group.builds.sort((a, b) =>
                   a.startTime > b.startTime ? -1 : 1
