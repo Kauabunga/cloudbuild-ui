@@ -1,10 +1,13 @@
 import React from "react";
+import Paper from "@mui/material/Paper";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import NoSsr from "@mui/core/NoSsr";
 
 import { clientCredentials } from "../src/firebase/client-app";
+import { Typography } from "@mui/material";
+import MainLayoutCenter from "../src/components/MainLayoutCenter";
 
 firebase.initializeApp(clientCredentials);
 
@@ -19,11 +22,20 @@ const uiConfig = {
 
 function SignInScreen() {
   return (
-    <NoSsr>
-      <h1>Cloudbuild CI</h1>
-      <p>Please sign-in:</p>
-      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-    </NoSsr>
+    <MainLayoutCenter>
+      <Paper sx={{ padding: 8 }}>
+        <Typography component="h1" variant="h3" gutterBottom>
+          Cloudbuild CI
+        </Typography>
+
+        <NoSsr>
+          <StyledFirebaseAuth
+            uiConfig={uiConfig}
+            firebaseAuth={firebase.auth()}
+          />
+        </NoSsr>
+      </Paper>
+    </MainLayoutCenter>
   );
 }
 

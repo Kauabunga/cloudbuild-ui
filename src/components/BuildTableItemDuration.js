@@ -18,6 +18,7 @@ export default function Duration({ startTime, finishTime }) {
       );
     }
 
+    setValue(formatDistanceToNowStrict(new Date(startTime)));
     const intervalHandler = setInterval(() => {
       setValue(formatDistanceToNowStrict(new Date(startTime)));
     }, 1000);

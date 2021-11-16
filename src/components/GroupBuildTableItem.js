@@ -12,10 +12,10 @@ import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 import AllBuildTable from "./AllBuildTable";
 import BuildTableItemAvatar from "./BuildTableItemAvatar";
+import BuildTableItemStarted from "./BuildTableItemStarted";
 import BuildTableItemDuration from "./BuildTableItemDuration";
 
 function GroupBuildTableItem(props) {
@@ -45,6 +45,9 @@ function GroupBuildTableItem(props) {
           {groupId}
         </TableCell>
 
+        <TableCell sx={cellCx} component="th" scope="row">
+          <BuildTableItemStarted startTime={group.startTime} />
+        </TableCell>
         <TableCell sx={cellCx} component="th" scope="row">
           <BuildTableItemDuration
             startTime={group.startTime}

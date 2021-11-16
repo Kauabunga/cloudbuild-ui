@@ -15,11 +15,13 @@ import {
   STATUSES_TIMEOUT,
   STATUSES_WORKING,
 } from "../src/cloudbuildStatus";
+import Loader from "../src/components/Loader";
+import Error from "../src/components/Error";
 
 export default function Home() {
   return (
     <>
-      <NoSsr>
+      <NoSsr fallback={<Loader />}>
         <HomePage />
       </NoSsr>
     </>
@@ -36,21 +38,32 @@ function HomePage() {
   }, [user, loadingUser]);
 
   const [snapshot, loading, error] = useCollection(
-    query(collection(db, "builds"), orderBy("startTime", "desc"), limit(250)),
+    query(collection(db, "builds"), orderBy("startTime", "desc"), limit(500)),
     {}
   );
 
   if (loading || loadingUser) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   if (error || errorUser) {
-    return <div>Error: {JSON.stringify(error)}</div>;
+    return <Error error={error?.message || errorUser?.message} />;
   }
 
   const builds = snapshot.docs.map((doc) => doc.data());
-  const buildsByGroupId = builds.reduce((acc, build) => {
-    const currentBuild = acc[build.groupId] || {};
+  const buildsByGroupId = groupBuilds(builds);
+
+  return <GroupBuildTable builds={buildsByGroupId} />;
+}
+
+function groupBuilds(builds) {
+  return builds.reduce((acc, build) => {
+    const projectGroupId = [build.projectId, build.groupId].join("-");
+    const currentBuild = acc[projectGroupId] || {};
+
+    if ([undefined, "", null, "_"].includes(build.groupId)) {
+      return acc;
+    }
 
     const status = [
       STATUSES_FAILURE,
@@ -62,27 +75,24 @@ function HomePage() {
       ? currentBuild.status
       : build.status;
 
+    const startTime =
+      currentBuild.startTime < build.startTime
+        ? currentBuild.startTime
+        : build.startTime;
+    const finishTime =
+      currentBuild.finishTime > build.finishTime
+        ? currentBuild.finishTime
+        : build.finishTime;
+
     return {
       ...acc,
-      [build.groupId]: {
-        startTime:
-          currentBuild.startTime < build.startTime
-            ? currentBuild.startTime
-            : build.startTime,
-        finishTime:
-          currentBuild.finishTime > build.finishTime
-            ? currentBuild.finishTime
-            : build.finishTime,
+      [projectGroupId]: {
+        startTime,
+        finishTime,
         tags: [],
         status,
         builds: [build].concat(currentBuild.builds || []),
       },
     };
   }, {});
-
-  return (
-    <>
-      <GroupBuildTable builds={buildsByGroupId} />
-    </>
-  );
 }

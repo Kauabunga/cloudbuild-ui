@@ -18,6 +18,7 @@ export default function GroupBuildTable({ builds }) {
             <TableCell />
             <TableCell />
             <TableCell>Env</TableCell>
+            <TableCell>Created</TableCell>
             <TableCell>Duration</TableCell>
           </TableRow>
         </TableHead>

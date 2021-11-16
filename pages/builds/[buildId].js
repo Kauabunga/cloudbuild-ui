@@ -5,10 +5,12 @@ import { useDocument } from "react-firebase-hooks/firestore";
 import NoSsr from "@mui/material/NoSsr";
 
 import { db } from "../../src/firebase/client-app";
+import Loader from "../../src/components/Loader";
+import Error from "../../src/components/Error";
 
 export default function Build() {
   return (
-    <NoSsr>
+    <NoSsr fallback={<Loader />}>
       <BuildPage />
     </NoSsr>
   );
@@ -24,11 +26,11 @@ function BuildPage() {
   );
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   if (error) {
-    return <div>Error: {JSON.stringify(error)}</div>;
+    return <Error error={error?.message} />;
   }
 
   return (

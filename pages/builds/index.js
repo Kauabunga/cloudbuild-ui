@@ -5,10 +5,12 @@ import NoSsr from "@mui/material/NoSsr";
 
 import { db } from "../../src/firebase/client-app";
 import BuildTable from "../../src/components/AllBuildTable";
+import Loader from "../../src/components/Loader";
+import Error from "../../src/components/Error";
 
 export default function AllBuilds() {
   return (
-    <NoSsr>
+    <NoSsr fallback={<Loader />}>
       <AllBuildsPage />
     </NoSsr>
   );
@@ -21,11 +23,11 @@ function AllBuildsPage() {
   );
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   if (error) {
-    return <div>Error: {JSON.stringify(error)}</div>;
+    return <Error error={error?.message} />;
   }
 
   return (

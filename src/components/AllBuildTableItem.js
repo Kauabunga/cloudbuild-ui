@@ -60,7 +60,11 @@ function BuildTableItem(props) {
         </TableCell>
 
         <TableCell sx={cellCx} align="center">
-          <IconButton component="a" href={`${build.logUrl}&authuser=1`}>
+          <IconButton
+            component="a"
+            href={`${build.logUrl}&authuser=1`}
+            target="_blank"
+          >
             <OpenInNewIcon />
           </IconButton>
         </TableCell>
