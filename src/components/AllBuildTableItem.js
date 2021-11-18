@@ -11,6 +11,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 import BuildTableItemAvatar from "./BuildTableItemAvatar";
+import BuildTableItemStarted from "./BuildTableItemStarted";
 import BuildTableItemDuration from "./BuildTableItemDuration";
 
 function BuildTableItem(props) {
@@ -52,6 +53,9 @@ function BuildTableItem(props) {
             ))}
         </TableCell>
 
+        <TableCell sx={cellCx}>
+          <BuildTableItemStarted startTime={build.startTime} />
+        </TableCell>
         <TableCell sx={cellCx}>
           <BuildTableItemDuration
             startTime={build.startTime}

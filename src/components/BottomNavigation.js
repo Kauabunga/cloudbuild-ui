@@ -45,20 +45,24 @@ function BottomNavigation() {
   );
 
   return (
-    <Paper
-      sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
-      elevation={3}
-    >
-      <MuiBottomNavigation
-        showLabels
-        value={value}
-        onChange={(event, newValue) => {
-          Router.push(actions[newValue].route);
-        }}
+    <>
+      <div style={{ paddingBottom: 56 }} />
+
+      <Paper
+        sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
+        elevation={3}
       >
-        {actions.map((action) => action.Component)}
-      </MuiBottomNavigation>
-    </Paper>
+        <MuiBottomNavigation
+          showLabels
+          value={value}
+          onChange={(event, newValue) => {
+            Router.push(actions[newValue].route);
+          }}
+        >
+          {actions.map((action) => action.Component)}
+        </MuiBottomNavigation>
+      </Paper>
+    </>
   );
 }
 

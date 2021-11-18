@@ -9,7 +9,14 @@ export default function BuildTableItemStarted({ startTime }) {
       return null;
     }
 
-    return setValue(formatRelative(new Date(startTime), new Date()));
+    setValue(formatRelative(new Date(startTime), new Date()));
+
+    // Update every minute
+    const intervalHandler = setInterval(() => {
+      setValue(formatRelative(new Date(startTime), new Date()));
+    }, 60 * 1000);
+
+    return () => clearInterval(intervalHandler);
   }, [startTime]);
 
   return value;

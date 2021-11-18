@@ -65,13 +65,18 @@ function groupBuilds(builds) {
       return acc;
     }
 
-    const status = [
+    const isFailureStatus = [
       STATUSES_FAILURE,
       STATUSES_INTERNAL_ERROR,
       STATUSES_TIMEOUT,
-    ].includes(currentBuild.status)
+    ].includes(currentBuild.status);
+    const isProgressStatus = [STATUSES_QUEUED, STATUSES_WORKING].includes(
+      currentBuild.status
+    );
+
+    const status = isFailureStatus
       ? currentBuild.status
-      : [STATUSES_QUEUED, STATUSES_WORKING].includes(currentBuild.status)
+      : isProgressStatus
       ? currentBuild.status
       : build.status;
 
@@ -88,7 +93,7 @@ function groupBuilds(builds) {
       ...acc,
       [projectGroupId]: {
         startTime,
-        finishTime,
+        finishTime: isProgressStatus ? null : finishTime,
         tags: [],
         status,
         builds: [build].concat(currentBuild.builds || []),
